@@ -92,7 +92,7 @@ if(!$uri){echo "T_T";exit();}elseif(preg_match("/m.facebook.com/", $uri)){
 		$fname = $saveddir."/".$vidID.".mp4";
 		$fname = str_replace('"',"",$fname);
 		if(file_put_contents($fname, fopen($uriDL, 'r'))){
-			echo "\nDone -> <a href='./".$saveddir."/".$vidID.".mp4'>".$vidID."</a>";
+			echo "\nDone -> <a href='./".$fname."'>".$vidID."</a>";
 		}else{
 			echo "Failed saving video !";
 		}
@@ -110,7 +110,7 @@ if(!$uri){echo "T_T";exit();}elseif(preg_match("/m.facebook.com/", $uri)){
 		$fname = $saveddir."/".$vidID.".mp4";
 		$fname = str_replace('"',"",$fname);
 		if(file_put_contents($fname, fopen($uriDL, 'r'))){
-			echo "\nDone -> <a href='./".$saveddir."/".$vidID.".mp4'>".$vidID."</a>";
+			echo "\nDone -> <a href='./".$fname."'>".$vidID."</a>";
 		}else{
 			echo "Failed saving video !";
 		}
