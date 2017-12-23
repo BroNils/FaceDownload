@@ -11,10 +11,12 @@
 //
 // Credit:
 //- GoogleX
+//
+// SourceMod are SUX
 
 $uri = $_REQUEST['url'];
+$fblink = "https://www.facebook.com/{ownerid}/posts/{postid}";
 $saveddir = "output";
-$names = "";
 
 if(!file_exists($saveddir)){
 	mkdir($saveddir);
@@ -29,8 +31,32 @@ function ambilKata($param, $kata1, $kata2){
     return $return;
 }
 
+function fbmobile($uri){
+	$ownerid = $_REQUEST['id'];
+	if($ownerid){
+		$uri = $uri.";";
+	}
+	$postid = ambilKata($uri,"story_fbid=",";");
+	if(!$postid){
+		$postid = ambilKata($uri,"story_fbid=","&");
+	}
+	$uri = str_replace("https://m.facebook.com/story.php?story_fbid=".$postid."&","",$uri);
+	if(!$ownerid){
+	    if(preg_match("/&/",$uri)){
+		    $ownerid = ambilKata($uri,"&id=","&");
+	    }else{
+		    $uri = $uri.";";
+		    $ownerid = ambilKata($uri,"&id=",";");
+	    }
+	}
+	$data = array(
+	    "postid" => $postid,
+		"ownerid" => $ownerid
+	);
+	return $data;
+}
+
 function getsource($url,$post=null) {
-	    global $names;
 		$ch = curl_init($url);
 		if($post != null) {
 	 	 	curl_setopt($ch, CURLOPT_POST, true);
@@ -50,6 +76,9 @@ function getsource($url,$post=null) {
 }
 
 if(!$uri){echo "T_T";exit();}elseif(preg_match("/m.facebook.com/", $uri)){
+	$xdat = fbmobile($uri);
+	$uri = str_replace("{ownerid}",$xdat['ownerid'],$fblink);
+	$uri = str_replace("{postid}",$xdat['postid'],$uri);
 	$xhttp = getsource($uri);
 	if(preg_match("/videoID/", $xhttp)){
 		$xhttp = str_replace("&quot;",'"',$xhttp);
@@ -58,9 +87,8 @@ if(!$uri){echo "T_T";exit();}elseif(preg_match("/m.facebook.com/", $uri)){
 		if(!$vidID){
 			$vidID = ambilKata($xhttp, 'videoID:',',');
 		}
-		$uriDL = ambilKata($xhttp, '"type":"video","src":"', '"');
+		$uriDL = ambilKata($xhttp, 'video:[{url:"', '"');
 		$uriDL = str_replace("\\","",$uriDL);
-		
 		if(file_put_contents($saveddir."/".$vidID.".mp4", fopen($uriDL, 'r'))){
 			echo "\nDone -> <a href='./".$saveddir."/".$vidID.".mp4'>".$vidID."</a>";
 		}else{
