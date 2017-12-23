@@ -11,8 +11,6 @@
 //
 // Credit:
 //- GoogleX
-//
-// SourceMod are SUX
 
 $uri = $_REQUEST['url'];
 $saveddir = "output";
