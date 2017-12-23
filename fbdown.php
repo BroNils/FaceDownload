@@ -89,7 +89,9 @@ if(!$uri){echo "T_T";exit();}elseif(preg_match("/m.facebook.com/", $uri)){
 		}
 		$uriDL = ambilKata($xhttp, 'video:[{url:"', '"');
 		$uriDL = str_replace("\\","",$uriDL);
-		if(file_put_contents($saveddir."/".$vidID.".mp4", fopen($uriDL, 'r'))){
+		$fname = $saveddir."/".$vidID.".mp4";
+		$fname = str_replace('"',"",$fname);
+		if(file_put_contents($fname, fopen($uriDL, 'r'))){
 			echo "\nDone -> <a href='./".$saveddir."/".$vidID.".mp4'>".$vidID."</a>";
 		}else{
 			echo "Failed saving video !";
@@ -105,7 +107,9 @@ if(!$uri){echo "T_T";exit();}elseif(preg_match("/m.facebook.com/", $uri)){
 			$vidID = ambilKata($xhttp, 'videoID:',',');
 		}
 		$uriDL = ambilKata($xhttp, 'sd_src_no_ratelimit:"', '",aspect_ratio:1');
-		if(file_put_contents($saveddir."/".$vidID.".mp4", fopen($uriDL, 'r'))){
+		$fname = $saveddir."/".$vidID.".mp4";
+		$fname = str_replace('"',"",$fname);
+		if(file_put_contents($fname, fopen($uriDL, 'r'))){
 			echo "\nDone -> <a href='./".$saveddir."/".$vidID.".mp4'>".$vidID."</a>";
 		}else{
 			echo "Failed saving video !";
