@@ -12,7 +12,6 @@
 // Credit:
 //- GoogleX
 //
-// SourceMod are SUX
 
 $uri = $_REQUEST['url'];
 $fblink = "https://www.facebook.com/{ownerid}/posts/{postid}";
